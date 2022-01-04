@@ -12,11 +12,8 @@ import {
   Mentions,
   Radio,
   Select,
-  Slider,
   Switch,
-  Transfer,
   TreeSelect,
-  Upload
 } from '../FormItems'
 
 import type { FormItem } from './Form'
@@ -143,7 +140,7 @@ export default (props => {
           <AutoComplate {...{
             ...config,
             ...props.configProps,
-            options: props.autoComplateOptions,
+            options: props.options,
             onChange: props.onChange
           }}/>
         )

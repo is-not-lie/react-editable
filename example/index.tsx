@@ -1,20 +1,19 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Thing } from '../.';
+import { Form } from '../.';
 
 const App = () => {
-
   const items = [
     {
       key: 'input',
       label: '输入框',
-      type: 'input'
+      type: 'input',
     },
     {
       key: 'inputNumber',
       label: '数值框',
-      type: 'inputNumber'
+      type: 'inputNumber',
     },
     {
       key: 'textarea',
@@ -24,12 +23,12 @@ const App = () => {
     {
       key: 'password',
       label: '密码框',
-      type: 'password'
+      type: 'password',
     },
     {
       key: 'search',
       label: '搜索框',
-      type: 'search'
+      type: 'search',
     },
     {
       key: 'radio',
@@ -38,7 +37,7 @@ const App = () => {
       options: [
         { key: '1', label: '1', value: 1 },
         { key: '2', label: '2', value: 2 },
-      ]
+      ],
     },
     {
       key: 'checkbox',
@@ -48,7 +47,7 @@ const App = () => {
         { key: '1', label: '1', value: 1 },
         { key: '2', label: '2', value: 2 },
         { key: '3', label: '3', value: 3 },
-      ]
+      ],
     },
     {
       key: 'select',
@@ -58,85 +57,86 @@ const App = () => {
         { key: '1', label: '1', value: 1 },
         { key: '2', label: '2', value: 2 },
         { key: '3', label: '3', value: 3 },
-      ]
+      ],
     },
     {
       key: 'treeSelect',
       label: '树形选择',
       type: 'treeSelect',
-      treeOptions: [{
-        key: '1',
-        label: '1',
-        value: '1',
-        children: [{
-          key: '1-1',
-          label: '1-1',
-          value: '1-1',
-          children: [{
-            key: '1-1-1',
-            label: '1-1-1',
-            value: '1-1-1'
-          }]
-        }]
-      }]
+      data: [
+        {
+          key: '1',
+          label: '1',
+          value: '1',
+          children: [
+            {
+              key: '1-1',
+              label: '1-1',
+              value: '1-1',
+              children: [
+                {
+                  key: '1-1-1',
+                  label: '1-1-1',
+                  value: '1-1-1',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       key: 'autoComplate',
       label: '自动完成',
       type: 'autoComplate',
-      autoComplateOptions: ['qwe', 'ssd', 'zxc']
+      options: ['qwe', 'ssd', 'zxc'],
     },
     {
       key: 'cascader',
       label: '级联选择',
       type: 'cascader',
-      treeOptions: [{
-        key: '1',
-        label: '1',
-        value: '1',
-        children: [{
-          key: '1-1',
-          label: '1-1',
-          value: '1-1',
-          children: [{
-            key: '1-1-1',
-            label: '1-1-1',
-            value: '1-1-1'
-          }]
-        }]
-      }]
+      options: [
+        {
+          key: '1',
+          label: '1',
+          value: '1',
+          children: [
+            {
+              key: '1-1',
+              label: '1-1',
+              value: '1-1',
+              children: [
+                {
+                  key: '1-1-1',
+                  label: '1-1-1',
+                  value: '1-1-1',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       key: 'date',
       label: '时间日期',
-      type: 'date'
+      type: 'date',
     },
     {
       key: 'mentions',
       label: '提及',
-      type: 'mentions'
+      type: 'mentions',
     },
     {
       key: 'switch',
       label: '开关',
-      type: 'switch'
+      type: 'switch',
     },
-    {
-      key: 'transfer',
-      label: '穿梭框',
-      type: 'transfer'
-    },
-    {
-      key: 'upload',
-      label: '文件上传',
-      type: 'upload'
-    }
-  ]
-  
+  ];
 
   return (
     <div>
-      <Thing />
+      <Form />
     </div>
   );
 };

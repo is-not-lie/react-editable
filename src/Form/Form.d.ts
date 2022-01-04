@@ -148,7 +148,7 @@ interface CheckboxFormItem extends Omit<BaseFormItem, 'onChange'> {
 interface AutoComplateFormItem extends BaseFormItem {
   type: 'autoComplate'
   onChange?(value: string, option?: Omit<AutoComplateOption, 'label'>): void
-  autoComplateOptions: AutoComplateOption[]
+  options: AutoComplateOption[]
   configProps?: Omit<AutoCompleteProps, 'onChange' | 'options'>
 }
 
