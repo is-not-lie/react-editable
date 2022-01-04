@@ -3,7 +3,7 @@
 1. 克隆
 
 ```zsh
-git clone
+git clone https://github.com/is-not-lie/react-editable.git
 ```
 
 2. 安装依赖
