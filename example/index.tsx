@@ -1,10 +1,10 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Form } from '../.';
+import { Form, FormItem } from '../.';
 
 const App = () => {
-  const items = [
+  const items: FormItem[] = [
     {
       key: 'input',
       label: '输入框',
@@ -34,6 +34,7 @@ const App = () => {
       key: 'radio',
       label: '单选框',
       type: 'radio',
+      name: 'count',
       options: [
         { key: '1', label: '1', value: 1 },
         { key: '2', label: '2', value: 2 },
@@ -89,7 +90,11 @@ const App = () => {
       key: 'autoComplate',
       label: '自动完成',
       type: 'autoComplate',
-      options: ['qwe', 'ssd', 'zxc'],
+      options: [
+        {key: 'qwe', label: 'qwe'},
+        {label: 'ssd', key: 'ssd'},
+        {label: 'zxc', key: 'zxc'}
+      ],
     },
     {
       key: 'cascader',
@@ -126,6 +131,11 @@ const App = () => {
       key: 'mentions',
       label: '提及',
       type: 'mentions',
+      options: [
+        {key: '123', label: '123'},
+        {key: 'asd', label: 'asd'},
+        {key: 'zxc', label: 'zxc'},
+      ]
     },
     {
       key: 'switch',
@@ -136,7 +146,7 @@ const App = () => {
 
   return (
     <div>
-      <Form />
+      <Form formItems={items} formKey="formKey"/>
     </div>
   );
 };

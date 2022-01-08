@@ -17,7 +17,7 @@ import {
   TreeSelect,
 } from '../FormItems'
 
-import type { FormItem } from './Form'
+import type { FormItem } from '../typings'
 import type { ColProps, FormItemProps } from 'antd'
 
 const { Item } = Form
@@ -212,7 +212,7 @@ export default (props => {
       case 'customComp':
         return props.comp && React.createElement(props.comp, props.configProps)
       default:
-        return
+        return null
     }
   }, [props])
 
@@ -221,4 +221,4 @@ export default (props => {
       <Item {...formItemProps}>{Content}</Item>
     </Col>
   )
-}) as FC<FormItem>
+}) as FC<FormItem & any>

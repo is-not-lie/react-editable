@@ -23,6 +23,7 @@ import type {
   WeekPickerProps,
   RangePickerProps
 } from 'antd/lib/date-picker'
+import type { NomalRecord } from './index'
 
 interface WeekDateConfig extends Omit<WeekPickerProps, 'onChange'> {
   picker: 'week'
@@ -50,11 +51,11 @@ export interface Option<V = string | number> extends NomalRecord {
   label: string
   disabled?: boolean
 }
-export interface CascaderOption extends Option {
+export interface CascaderOption extends Omit<Option, 'label'> {
   label: ReactNode
   children?: CascaderOption[]
 }
-export interface AutoComplateOption extends Option {
+export interface AutoComplateOption extends Omit<Option, 'label'> {
   label: ReactNode
 }
 export interface CheckboxOptions extends Option {
@@ -85,7 +86,7 @@ type selectOnChange = (
   option?: SelectOption | SelectOption[]
 ) => void
 
-interface BaseFormItem<Value = any> {
+interface BaseFormItem {
   key: string
   label: ReactNode
   size?: Size
@@ -144,8 +145,8 @@ interface DateFormItem extends BaseFormItem {
   onChange?(value: number): void
   configProps?: Omit<DatePickerProps, 'onChange' | 'picker'>
 }
-type PanelMode = 'time' | 'date' | 'week' | 'month' | 'quarter' | 'year' | 'decade'
-interface RangeDateFormItem extends BaseFormItem {
+// type PanelMode = 'time' | 'date' | 'week' | 'month' | 'quarter' | 'year' | 'decade'
+export interface RangeDateFormItem extends BaseFormItem {
   type: 'rangeDate',
   onChange?(value: number[]): void
   configProps?: Omit<DatePickerProps, 'onChange' | 'picker' | 'mode' | 'value' | 'defaultValue' | 'defaultPickerValue' | 'onPanelChange' | 'placeholder' | 'onOk'> & Omit<RangePickerProps, 'onChange'>
@@ -162,7 +163,7 @@ interface RadioFormItem extends BaseFormItem {
 
 export type CheckboxOmitProp =
   | 'onChange' | 'disabled' | 'defaultChecked' | 'checked'
-interface CheckboxFormItem extends Omit<BaseFormItem, 'onChange'> {
+export interface CheckboxFormItem extends Omit<BaseFormItem, 'onChange'> {
   type: 'checkbox'
   options: CheckboxOptions[]
   direction?: Direction
@@ -183,7 +184,7 @@ interface CascaderFormItem extends BaseFormItem {
   type: 'cascader'
   options: CascaderOption[]
   onChange?(value: Key | Key[], option?: NomalRecord[] | NomalRecord[][]): void
-  configProps?: Omit<CascaderProps, 'onChange' | 'options'>
+  configProps?: Omit<CascaderProps<any>, 'onChange' | 'options'>
 }
 
 interface MentionsFormItem extends BaseFormItem {

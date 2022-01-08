@@ -3,7 +3,7 @@ import { Cascader } from 'antd'
 
 import type { FC } from 'react'
 import type { CascaderProps } from 'antd'
-import type { CascaderOption } from '../../Form/Form'
+import type { CascaderOption } from '../../typings'
 
 export default (props => {
   const { options, onChange, ...params } = props
@@ -24,7 +24,7 @@ export default (props => {
   }, [options])
 
   return (
-    <Cascader {...params} options={cascaderOptions}/>
+    <Cascader {...params} options={cascaderOptions as any}/>
   )
 }) as FC<IProps>
 

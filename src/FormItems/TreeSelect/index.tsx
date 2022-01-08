@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react'
 import { TreeSelect } from 'antd'
 
 import type { TreeSelectProps } from 'antd'
-import type { TreeData } from '../../Form/Form'
+import type { NomalRecord, TreeData } from '../../typings'
 
 export default (props => {
   const { treeData, onChange, ...params } = props

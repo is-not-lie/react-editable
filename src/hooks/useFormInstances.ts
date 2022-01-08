@@ -1,5 +1,6 @@
-import type { FormInstance } from 'antd'
 import { useCallback, useMemo } from 'react'
+import type { FormInstance } from 'antd'
+import type { NomalRecord } from '../typings'
 
 export const InstanceStacks = new Map<string, FormInstance>()
 

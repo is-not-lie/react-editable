@@ -3,7 +3,7 @@ import { DatePicker } from 'antd'
 
 import type { FC } from 'react'
 import type { DatePickerProps } from 'antd'
-import type { DateConfig } from '../../Form/Form'
+import type { DateConfig } from '../../typings'
 
 export default (props => {
   const { dateConfig, onChange, ...params } = props

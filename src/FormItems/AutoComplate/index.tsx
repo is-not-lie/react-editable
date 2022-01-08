@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { AutoComplete } from 'antd'
 
 import type { AutoCompleteProps } from 'antd'
-import type { AutoComplateOption } from '../../Form/Form'
+import type { AutoComplateOption } from '../../typings'
 
 export default (props => {
   const { options, onChange, ...params } = props

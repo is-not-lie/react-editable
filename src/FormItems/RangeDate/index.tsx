@@ -2,7 +2,7 @@ import React from 'react'
 import { DatePicker } from 'antd'
 
 import type { FC } from 'react'
-import type { RangeDateFormItem } from '../../Form/Form'
+import type { RangeDateFormItem } from '../../typings'
 
 export default (props => {
   const { onChange, ...params } = props

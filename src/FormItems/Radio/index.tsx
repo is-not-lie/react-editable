@@ -2,7 +2,7 @@ import React, { FC, useCallback, useMemo } from 'react'
 import { Radio, Space } from 'antd'
 
 import type { RadioGroupProps, RadioChangeEvent } from 'antd'
-import type { Option, Direction } from '../../Form/Form'
+import type { Option, Direction } from '../../typings'
 
 export default (props => {
   const {

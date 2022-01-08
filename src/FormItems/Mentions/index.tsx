@@ -2,7 +2,7 @@ import React, { FC, useCallback, useMemo } from 'react'
 import { Mentions } from 'antd'
 
 import type { MentionProps } from 'antd'
-import type { Option } from '../../Form/Form'
+import type { Option } from '../../typings'
 
 export default (props => {
   const { options, onChange, ...params } = props

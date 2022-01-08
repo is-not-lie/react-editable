@@ -7,7 +7,7 @@ import type {
   CheckboxOptions,
   CheckboxFormItem,
   CheckboxOmitProp
-} from '../../Form/Form'
+} from '../../typings'
 
 export default (props => {
   const {

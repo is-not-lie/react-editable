@@ -10,7 +10,7 @@ import { DownOutlined, UpOutlined } from '@ant-design/icons'
 import Form from '../Form'
 import { useFormInstance } from '../hooks'
 
-import type { FormProps, FormItem } from '../Form/Form'
+import type { FormProps, FormItem, NomalRecord } from '../typings'
 import type { FormInstance } from '../hooks/useFormInstances'
 import type { ForwardRefRenderFunction } from 'react'
 

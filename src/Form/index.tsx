@@ -3,7 +3,7 @@ import { Form as AntdForm, Row } from 'antd'
 import { InstanceStacks } from '../hooks'
 import FormItem from './Item'
 
-import type { FormProps } from './Form'
+import type { FormProps } from '../typings'
 import type { FC } from 'react'
 
 const { useForm } = AntdForm;

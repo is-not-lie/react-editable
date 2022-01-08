@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import { Select } from 'antd'
 
-import type { SelectOption } from '../../Form/Form'
+import type { SelectOption } from '../../typings'
 import type { SelectProps } from 'antd'
 
 export default (props => {
