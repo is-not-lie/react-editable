@@ -44,22 +44,22 @@ interface IBaseProps {
 
 interface IInputProps extends IBaseProps {
   type: 'input'
-  configProps?: InputProps
+  configProps?: Omit<InputProps, 'onChange'>
 }
 
 interface ITextAreaProps extends IBaseProps {
   type: 'textarea'
-  configProps?: TextAreaProps
+  configProps?: Omit<TextAreaProps, 'onChange'>
 }
 
 interface IPasswordProps extends IBaseProps {
   type: 'password'
-  configProps?: PasswordProps
+  configProps?: Omit<PasswordProps, 'onChange'>
 }
 
 interface ISearchProps extends IBaseProps {
   type: 'search'
-  configProps?: SearchProps
+  configProps?: Omit<SearchProps, 'onChange'>
 }
 
 type IProps = IInputProps | ITextAreaProps | IPasswordProps | ISearchProps

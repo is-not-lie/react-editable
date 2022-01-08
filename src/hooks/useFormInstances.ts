@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react'
 
 export const InstanceStacks = new Map<string, FormInstance>()
 
-const useFormInstance = (formKey: string) => {
+const useFormInstance = (formKey: string): Instance => {
   const setValue = useCallback((value: NomalRecord) => {
     InstanceStacks.get(formKey)?.setFieldsValue(value)
   }, [formKey])
@@ -25,3 +25,14 @@ const useFormInstance = (formKey: string) => {
 }
 
 export default useFormInstance
+
+interface Instance {
+  setValue(value: NomalRecord): void
+  reset(): void
+  validate(): Promise<NomalRecord> | undefined
+  getInstance: () => FormInstance | undefined
+}
+
+export {
+  Instance as FormInstance
+}

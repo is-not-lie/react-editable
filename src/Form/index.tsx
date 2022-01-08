@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo } from 'react'
-import { Form, Row } from 'antd'
+import { Form as AntdForm, Row } from 'antd'
 import { InstanceStacks } from '../hooks'
 import FormItem from './Item'
 
 import type { FormProps } from './Form'
 import type { FC } from 'react'
 
-const { useForm } = Form;
+const { useForm } = AntdForm;
 
-export default ((props) => {
+const Form: FC<FormProps> = (props) => {
   const {
     formKey,
     defaultSize,
@@ -38,10 +38,12 @@ export default ((props) => {
   }, [])
 
   return (
-    <Form form={formInstance} {...params}>
+    <AntdForm form={formInstance} {...params}>
       <Row {...(flexConfig || {})}>
         {FormItems}
       </Row>
-    </Form>
+    </AntdForm>
   )
-}) as FC<FormProps>
+}
+
+export default Form

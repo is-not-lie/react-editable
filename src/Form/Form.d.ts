@@ -1,4 +1,4 @@
-import type { CSSProperties, ComponentType, ReactNode } from 'react'
+import type { CSSProperties, ComponentType, ReactNode, Key } from 'react'
 import type { Rule } from 'rc-field-form/lib/interface'
 import type {
   InputNumberProps,
@@ -24,7 +24,24 @@ import type {
   RangePickerProps
 } from 'antd/lib/date-picker'
 
-interface DateConfig {}
+interface WeekDateConfig extends Omit<WeekPickerProps, 'onChange'> {
+  picker: 'week'
+}
+interface MonthDateConfig extends Omit<MonthPickerProps, 'onChange'> {
+  picker: 'month',
+}
+interface QuarterDateConfig extends Omit<MonthPickerProps, 'onChange' | 'monthCellRender'>{
+  picker: 'quarter'
+}
+interface YearDateConfig extends Omit<MonthPickerProps, 'onChange' | 'monthCellRender'> {
+  picker: 'year',
+}
+
+export type DateConfig =
+  | WeekDateConfig
+  | MonthDateConfig
+  | QuarterDateConfig
+  | YearDateConfig
 
 export type Direction = 'vertical' | 'horizontal'
 export type Size = 'large' | 'middle' | 'small'
@@ -32,6 +49,10 @@ export interface Option<V = string | number> extends NomalRecord {
   key: V
   label: string
   disabled?: boolean
+}
+export interface CascaderOption extends Option {
+  label: ReactNode
+  children?: CascaderOption[]
 }
 export interface AutoComplateOption extends Option {
   label: ReactNode
@@ -66,7 +87,7 @@ type selectOnChange = (
 
 interface BaseFormItem<Value = any> {
   key: string
-  label: string
+  label: ReactNode
   size?: Size
   /** 表单开启 flex 布局时生效, 控制表单项的 flex 属性 */
   flex?: string | number
@@ -90,38 +111,44 @@ interface BaseFormItem<Value = any> {
 interface InputFormItem extends BaseFormItem {
   type: 'input',
   onChange?: InputOnChange
-  configProps?: Omit<InputProps, 'onChange'>
+  configProps?: Omit<InputProps, 'onChange' | 'onInput'>
 }
 
 interface InputNumberFormItem extends BaseFormItem {
   type: 'inputNumber'
   onChange?: InputOnChange
-  configProps?: Omit<InputNumberProps, 'onChange'>
+  configProps?: Omit<InputNumberProps, 'onChange' | 'onInput'>
 }
 
 interface PasswordFormItem extends BaseFormItem {
   type: 'password'
   onChange?: InputOnChange
-  configProps?: Omit<PasswordProps, 'onChange'>
+  configProps?: Omit<PasswordProps, 'onChange' | 'onInput'>
 }
 
 interface SearchFormItem extends BaseFormItem {
   type: 'search'
   onChange?: InputOnChange
-  configProps?: Omit<SearchProps, 'onChange'>
+  configProps?: Omit<SearchProps, 'onChange' | 'onInput'>
 }
 
 interface TextAreaFormItem extends BaseFormItem {
   type: 'textarea'
   onChange?: InputOnChange
-  configProps?: Omit<TextAreaProps, 'onChange'>
+  configProps?: Omit<TextAreaProps, 'onChange' | 'onInput'>
 }
 
 interface DateFormItem extends BaseFormItem {
   type: 'date'
   dateConfig?: DateConfig
   onChange?(value: number): void
-  configProps?: Omit<DatePickerProps, 'onChange'>
+  configProps?: Omit<DatePickerProps, 'onChange' | 'picker'>
+}
+type PanelMode = 'time' | 'date' | 'week' | 'month' | 'quarter' | 'year' | 'decade'
+interface RangeDateFormItem extends BaseFormItem {
+  type: 'rangeDate',
+  onChange?(value: number[]): void
+  configProps?: Omit<DatePickerProps, 'onChange' | 'picker' | 'mode' | 'value' | 'defaultValue' | 'defaultPickerValue' | 'onPanelChange' | 'placeholder' | 'onOk'> & Omit<RangePickerProps, 'onChange'>
 }
 
 interface RadioFormItem extends BaseFormItem {
@@ -154,9 +181,9 @@ interface AutoComplateFormItem extends BaseFormItem {
 
 interface CascaderFormItem extends BaseFormItem {
   type: 'cascader'
-  options: Option[]
-  onChange?: selectOnChange
-  configProps?: Omit<CascaderProps, 'onChange'>
+  options: CascaderOption[]
+  onChange?(value: Key | Key[], option?: NomalRecord[] | NomalRecord[][]): void
+  configProps?: Omit<CascaderProps, 'onChange' | 'options'>
 }
 
 interface MentionsFormItem extends BaseFormItem {
@@ -207,6 +234,7 @@ export type FormItem =
   | SearchFormItem
   | TextAreaFormItem
   | DateFormItem
+  | RangeDateFormItem
   | RadioFormItem
   | CheckboxFormItem
   | AutoComplateFormItem
@@ -220,7 +248,7 @@ export type FormItem =
 
 interface DefaultLayout { col?: number; wrapperCol?: number; labelCol?: number }
 
-interface FormProps {
+export interface FormProps {
   formKey: string;
   className?: string;
   /** 表单控件尺寸, 默认: small */

@@ -1,0 +1,15 @@
+@import '../styles/variable.scss';
+
+.form-filter-container {
+  padding: $default-margin;
+  border: 1px solid $default-border-color;
+  border-radius: $default-border-radius;
+  background-color: $filter-bg-color;
+  .filter-btns-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: end;
+  }
+}

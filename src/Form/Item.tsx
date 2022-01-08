@@ -9,6 +9,7 @@ import {
   Cascader,
   Checkbox,
   Date,
+  RangeDate,
   Mentions,
   Radio,
   Select,
@@ -70,7 +71,11 @@ export default (props => {
   const Content = useMemo(() => {
     const config = {
       size,
-      ...(labelInPlaceholder && { placeholder: label })
+      ...(
+        labelInPlaceholder &&
+        typeof label === 'string' &&
+        { placeholder: label }
+      )
     }
     switch(type) {
       case 'input':
@@ -145,8 +150,14 @@ export default (props => {
           }}/>
         )
       case 'cascader':
-        props.options
-        return <Cascader />
+        return (
+          <Cascader
+            options={props.options}
+            onChange={props.onChange}
+            {...config}
+            {...(props.configProps || {})}
+          />
+        )
       case 'checkbox':
         return (
           <Checkbox
@@ -158,15 +169,24 @@ export default (props => {
           />
         )
       case 'date':
-        props.dateConfig
-        return <Date />
+        return (
+          <Date
+            {...(props.configProps || {})}
+            dateConfig={props.dateConfig}
+            onChange={props.onChange}
+          />
+        )
+      case 'rangeDate':
+        return (
+          <RangeDate onChange={props.onChange} {...(props.configProps || {})} />
+        )
       case 'mentions':
         return (
           <Mentions {...{
             options: props.options,
             onChange: props.onChange,
             prefix: props.prefix,
-            ...(labelInPlaceholder && { placeholder: label }),
+            ...config,
             ...props.configProps
           }}/>
         )

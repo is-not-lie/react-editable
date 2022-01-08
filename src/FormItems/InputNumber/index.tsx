@@ -5,4 +5,8 @@ import type { InputNumberProps } from 'antd'
 
 export default (props => {
   return <InputNumber {...props} />
-}) as FC<InputNumberProps>
+}) as FC<IProps>
+
+interface IProps extends Omit<InputNumberProps, 'onChange'> {
+  onChange?(value?: number | string): void
+}
