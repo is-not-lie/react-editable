@@ -193,7 +193,6 @@ export default (props => {
       case 'radio':
         return (
           <Radio
-            name={props.name}
             options={props.options}
             direction={props.direction}
             onChange={props.onChange}

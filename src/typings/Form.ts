@@ -154,7 +154,6 @@ export interface RangeDateFormItem extends BaseFormItem {
 
 interface RadioFormItem extends BaseFormItem {
   type: 'radio'
-  name: string
   options: Option[]
   direction?: Direction
   onChange?: selectOnChange

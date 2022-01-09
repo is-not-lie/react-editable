@@ -6,7 +6,6 @@ import type { Option, Direction } from '../../typings'
 
 export default (props => {
   const {
-    name,
     size,
     value,
     options,
@@ -30,7 +29,6 @@ export default (props => {
       const config = {
         key,
         size,
-        name,
         ...params,
         ...(disabled && {disabled}),
         ...(value && {value}),
@@ -45,11 +43,14 @@ export default (props => {
     })
   }, [props, handleChange])
 
-  return <Space wrap align="start" direction={direction}>{radios}</Space>
+  return (
+    <Radio.Group>
+      <Space wrap align="start" direction={direction}>{radios}</Space>
+    </Radio.Group>
+  )
 }) as FC<IProps>
 
 interface IProps extends Omit<RadioGroupProps, 'options' | 'onChange'> {
-  name: string
   options: Option[]
   direction?: Direction
   onChange?(value: string | number, option?: Option): void
