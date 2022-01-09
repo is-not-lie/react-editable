@@ -15,8 +15,10 @@ const useFormInstance = (formKey: string): Instance => {
 
   const getInstance = useCallback((): FormInstance | undefined => InstanceStacks.get(formKey), [formKey])
 
-  const validate = useCallback(() =>
-    InstanceStacks.get(formKey)?.validateFields(),
+  const validate = useCallback(() => {
+    console.log("🚀 ~ file: useFormInstances.ts ~ line 20 ~ useFormInstance ~ InstanceStacks.get(formKey)", formKey, InstanceStacks.get(formKey))
+    return InstanceStacks.get(formKey)?.validateFields()
+  },
   [formKey])
 
 

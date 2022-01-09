@@ -7,15 +7,16 @@ import type { FormProps } from '../typings'
 import type { FC } from 'react'
 
 const { useForm } = AntdForm;
-
+const defaultFormLayout = { wrapperCol: 16, labelCol: 6, col: 6 }
+const defaultFlexConfig = { gutter: 8 }
 const Form: FC<FormProps> = (props) => {
   const {
     formKey,
     defaultSize,
     onChange,
-    flexConfig,
+    flexConfig = defaultFlexConfig,
     formItems,
-    defalutLayout,
+    defaultLayout = defaultFormLayout,
     ...params
   } = props;
   const [formInstance] = useForm();
@@ -27,11 +28,11 @@ const Form: FC<FormProps> = (props) => {
         onChange: (value: any, option?: any) =>
           onChange && onChange(key, value, option),
         ...(defaultSize && { size: defaultSize }),
-        ...defalutLayout
+        ...defaultLayout
       }
       return <FormItem {...config} {...item} />
     })
-  }, [formItems, defalutLayout, onChange, defaultSize])
+  }, [formItems, defaultLayout, onChange, defaultSize])
 
   useEffect(() => {
     !InstanceStacks.has(formKey) && InstanceStacks.set(formKey, formInstance)

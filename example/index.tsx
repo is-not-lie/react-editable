@@ -1,7 +1,9 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Form, FormItem } from '../.';
+import { Form, FormItem, Filter } from '../.';
+import 'antd/dist/antd.css'
+import './style.scss'
 
 const App = () => {
   const items: FormItem[] = [
@@ -14,11 +16,6 @@ const App = () => {
       key: 'inputNumber',
       label: '数值框',
       type: 'inputNumber',
-    },
-    {
-      key: 'textarea',
-      label: '文本框',
-      type: 'textarea',
     },
     {
       key: 'password',
@@ -142,11 +139,29 @@ const App = () => {
       label: '开关',
       type: 'switch',
     },
+    {
+      key: 'textarea',
+      label: '文本框',
+      type: 'textarea',
+    },
   ];
 
+  const handleSearch = data => new Promise(resolve => {
+    console.log("🚀 ~ file: index.tsx ~ line 150 ~ App ~ data", data)
+    setTimeout(resolve, 10000)
+  })
+
   return (
-    <div>
-      <Form formItems={items} formKey="formKey"/>
+    <div className='wrapper'>
+      <div className='slider'>slider</div>
+      <div className='content'>
+        <div className='header'>
+          <Filter formItems={items} formKey="filter" onSearch={handleSearch}/>
+        </div>
+        <div className='form-container'>
+          <Form formItems={items} formKey="formKey"/>
+        </div>
+      </div>
     </div>
   );
 };

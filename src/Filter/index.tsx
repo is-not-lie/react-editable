@@ -14,6 +14,9 @@ import type { FormProps, FormItem, NomalRecord } from '../typings'
 import type { FormInstance } from '../hooks/useFormInstances'
 import type { ForwardRefRenderFunction } from 'react'
 
+import './style.scss'
+
+const defaultCol = 6;
 const Filter: ForwardRefRenderFunction<FilterRef, FilterProps> = (props, ref) => {
   const {
     formKey,
@@ -56,13 +59,13 @@ const Filter: ForwardRefRenderFunction<FilterRef, FilterProps> = (props, ref) =>
       onValidateError && onValidateError(error)
     }
     resetLoading()
-  }, [onSearch, onValidateError])
+  }, [onSearch, onValidateError, formInstance])
   const handleReset = useCallback(async () => {
     setLoading('reset')
     formInstance.reset()
     onAfterReset && (await onAfterReset())
     resetLoading()
-  }, [onAfterReset])
+  }, [onAfterReset, formInstance])
 
   const btns = useMemo(() => {
     const baseBtn: ButtonConfigs[] = [
@@ -83,7 +86,7 @@ const Filter: ForwardRefRenderFunction<FilterRef, FilterProps> = (props, ref) =>
     if (formItems.length > (maxLineCount * maxColumnCount) - 1) {
       baseBtn.push({
         key: 'expand',
-        label: '展开',
+        label: expanded ? '收起' : '展开',
         type: 'link',
         fn: async () => setExpanded(!expanded),
         icon: expanded ? <UpOutlined /> : <DownOutlined />
@@ -133,17 +136,17 @@ const Filter: ForwardRefRenderFunction<FilterRef, FilterProps> = (props, ref) =>
     return 24 - (lastLineCol % 24)
   }, [])
 
-  const btnContainerCol = useMemo(() => {
-    const len = formItems.length
+  const getBtnContainerCol = useCallback(($formItems: FormItem[]) => {
+    const len = $formItems.length
     const lastLineCount = len % maxLineCount
-    const lastLineItems = formItems.slice(-(
+    const lastLineItems = $formItems.slice(-(
       lastLineCount === 0 ? maxLineCount : lastLineCount
     ))
     const lastLineCol = lastLineItems.reduce((pre, cur) => {
-      return pre + (cur.col || 0)
+      return pre + (cur.col || defaultCol)
     }, 0)
     return getLineCol(lastLineCol)
-  }, [maxLineCount, maxColumnCount, formItems, getLineCol])
+  }, [maxLineCount, maxColumnCount, getLineCol])
 
   const mapFormItems = useCallback((items: FormItem[]) => {
     const lastItem = items.slice(-1)[0]
@@ -153,11 +156,11 @@ const Filter: ForwardRefRenderFunction<FilterRef, FilterProps> = (props, ref) =>
       key: 'filterBtns',
       label: '',
       type: 'custom',
-      col: btnContainerCol,
+      col: getBtnContainerCol(items),
       customRender: () => btns
     }
     return items.concat(filterBtns)
-  }, [btnContainerCol, btns])
+  }, [getBtnContainerCol, btns])
 
   const items = useMemo(() => {
     const len = formItems.length

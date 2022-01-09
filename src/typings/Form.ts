@@ -263,7 +263,7 @@ export interface FormProps {
   /** 表单默认值 */
   initialValue?: AntdFormProps['initialValues'];
   /** 表单默认布局 */
-  defalutLayout?: DefaultLayout;
+  defaultLayout?: DefaultLayout;
   /** 表单项 change 事件 */
   onChange?(field: string, value: any, option?: any): void;
   /** 表单提交成功时回调 */
