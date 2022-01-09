@@ -31,7 +31,6 @@ const App = () => {
       key: 'radio',
       label: '单选框',
       type: 'radio',
-      name: 'count',
       options: [
         { key: '1', label: '1', value: 1 },
         { key: '2', label: '2', value: 2 },
