@@ -29,10 +29,11 @@
     }
   },
   "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": false,
+    "jsxSingleQuote": true,
+    "trailingComma": "none"
   },
   "name": "react-editable",
   "author": "uso",
