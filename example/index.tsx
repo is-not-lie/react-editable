@@ -1,7 +1,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Form, FormItem, Filter } from '../.';
+import { Form, FormItem, Filter } from '../src';
 import 'antd/dist/antd.css'
 import './style.scss'
 
@@ -11,6 +11,8 @@ const App = () => {
       key: 'input',
       label: '输入框',
       type: 'input',
+      required: true,
+      rules: [{required: true}]
     },
     {
       key: 'inputNumber',
@@ -31,10 +33,15 @@ const App = () => {
       key: 'radio',
       label: '单选框',
       type: 'radio',
+      required: true,
+      rules: [{required: true}],
       options: [
         { key: '1', label: '1', value: 1 },
         { key: '2', label: '2', value: 2 },
       ],
+      configProps: {
+        name: 'my-radio'
+      }
     },
     {
       key: 'checkbox',
@@ -143,12 +150,21 @@ const App = () => {
       label: '文本框',
       type: 'textarea',
     },
+    {
+      key: '',
+      label: '',
+      type: 'custom',
+      noRenderFormItem: true,
+      customRender: () => <button type='submit'>Submit</button>
+    }
   ];
 
-  const handleSearch = data => new Promise(resolve => {
-    console.log("🚀 ~ file: index.tsx ~ line 150 ~ App ~ data", data)
-    setTimeout(resolve, 10000)
-  })
+  const handleSearch = data => {
+    return new Promise(resolve => {
+      console.log("🚀 ~ file: index.tsx ~ line 150 ~ App ~ data", data)
+      setTimeout(resolve, 10000)
+    }) as Promise<void>
+  }
 
   return (
     <div className='wrapper'>
@@ -158,7 +174,9 @@ const App = () => {
           <Filter formItems={items} formKey="filter" onSearch={handleSearch}/>
         </div>
         <div className='form-container'>
-          <Form formItems={items} formKey="formKey"/>
+          <Form formItems={items} formKey="formKey" onFinish={(values) => {
+            console.log('form on finish values is => ', values)
+          }}/>
         </div>
       </div>
     </div>

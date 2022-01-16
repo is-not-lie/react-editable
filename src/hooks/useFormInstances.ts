@@ -1,30 +1,22 @@
-import { useCallback, useMemo } from 'react'
 import type { FormInstance } from 'antd'
 import type { NomalRecord } from '../typings'
 
 export const InstanceStacks = new Map<string, FormInstance>()
 
 const useFormInstance = (formKey: string): Instance => {
-  const setValue = useCallback((value: NomalRecord) => {
+  const setValue = (value: NomalRecord) => {
     InstanceStacks.get(formKey)?.setFieldsValue(value)
-  }, [formKey])
+  }
 
-  const reset = useCallback(() => {
+  const reset = () => {
     InstanceStacks.get(formKey)?.resetFields()
-  }, [formKey])
+  }
 
-  const getInstance = useCallback((): FormInstance | undefined => InstanceStacks.get(formKey), [formKey])
+  const getInstance = () => InstanceStacks.get(formKey)
 
-  const validate = useCallback(() => {
-    console.log("🚀 ~ file: useFormInstances.ts ~ line 20 ~ useFormInstance ~ InstanceStacks.get(formKey)", formKey, InstanceStacks.get(formKey))
-    return InstanceStacks.get(formKey)?.validateFields()
-  },
-  [formKey])
+  const validate = () => InstanceStacks.get(formKey)?.validateFields()
 
-
-  const instance = useMemo(() => ({ setValue, reset, getInstance, validate }), [setValue, reset, getInstance, validate])
-
-  return instance;
+  return { setValue, reset, getInstance, validate };
 }
 
 export default useFormInstance

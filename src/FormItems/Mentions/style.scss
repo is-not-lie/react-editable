@@ -1,0 +1,20 @@
+@import '../../styles/variable.scss';
+
+.mentions-size-small {
+  .rc-textarea {
+    padding: $padding-small;
+    min-height: $min-height-small;
+  }
+}
+.mentions-size-middle {
+  .rc-textarea {
+    padding: $padding-middle;
+    min-height: $min-height-middle;
+  }
+}
+.mentions-size-large {
+  .rc-textarea {
+    padding: $padding-large;
+    min-height: $min-height-large;
+  }
+}

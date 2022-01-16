@@ -6,10 +6,14 @@ import type { DatePickerProps } from 'antd'
 import type { DateConfig } from '../../typings'
 
 export default (props => {
-  const { dateConfig, onChange, ...params } = props
+  const { dateConfig, onChange, style, ...params } = props
 
   const Content = useMemo(() => {
     const { picker } = dateConfig || {}
+    const dateStyle = {
+      width: '100%',
+      ...style
+    }
     switch (picker) {
       case 'year':
       case 'month':
@@ -20,6 +24,7 @@ export default (props => {
             {...params}
             {...(dateConfig || {})}
             onChange={(date) => date && onChange && onChange(date.valueOf())}
+            style={dateStyle}
           />
         )
       default:
@@ -27,6 +32,7 @@ export default (props => {
           <DatePicker
             {...params}
             onChange={(date) => date && onChange && onChange(date.valueOf())}
+            style={dateStyle}
           />
         )
     }

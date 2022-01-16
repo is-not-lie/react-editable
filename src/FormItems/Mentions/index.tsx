@@ -2,10 +2,12 @@ import React, { FC, useCallback, useMemo } from 'react'
 import { Mentions } from 'antd'
 
 import type { MentionProps } from 'antd'
-import type { Option } from '../../typings'
+import type { Option, Size } from '../../typings'
+
+import './style.scss'
 
 export default (props => {
-  const { options, onChange, ...params } = props
+  const { options, onChange, size, className, ...params } = props
 
   const handleChange = useCallback((value: string) => {
     const changeItem = options.find(item => item.key === value)
@@ -25,11 +27,18 @@ export default (props => {
   }, [options])
 
   return (
-    <Mentions {...params} onChange={handleChange}>{mentionOptions}</Mentions>
+    <Mentions
+      {...params}
+      onChange={handleChange}
+      className={`mentions-size-${size} ${className || ''}`}
+    >
+      {mentionOptions}
+    </Mentions>
   )
 }) as FC<IProps>
 
 interface IProps extends Omit<MentionProps, 'onChange'> {
+  size?: Size
   options: Option<string>[]
   onChange?(value: string, option?: Option<string>): void
 }

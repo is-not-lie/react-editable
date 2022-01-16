@@ -1,7 +1,4 @@
 import React, { FC, useMemo } from 'react'
-import { Form, Col } from 'antd'
-import { isDef } from '../tools'
-import { pick } from 'lodash'
 import {
   Input,
   InputNumber,
@@ -18,55 +15,13 @@ import {
 } from '../FormItems'
 
 import type { FormItem } from '../typings'
-import type { ColProps, FormItemProps } from 'antd'
-
-const { Item } = Form
 export default (props => {
   const {
-    col,
-    key,
     type,
-    flex,
-    size = 'small',
+    size,
     label,
-    offset,
-    sortOrder,
-    labelCol,
-    wrapperCol,
-    labelLeft,
     labelInPlaceholder
   } = props;
-
-  const colProps = useMemo((): ColProps => ({
-    ...(isDef(col) && { span: col }),
-    ...(isDef(offset) && { offset }),
-    ...(isDef(sortOrder) && { order: sortOrder }),
-    ...(isDef(flex) && { flex })
-  }), [col, offset, sortOrder, flex])
-
-  const formItemProps = useMemo((): FormItemProps => ({
-    name: key,
-    labelAlign: labelLeft ? 'left' : 'right',
-    ...(isDef(labelCol) && { span: labelCol }),
-    ...(isDef(wrapperCol) && { span: wrapperCol }),
-    ...(!labelInPlaceholder && { label }),
-    ...pick(props, [
-      'rules',
-      'style',
-      'required',
-      'className',
-    ])
-  }), [
-    key,
-    labelLeft,
-    labelCol,
-    wrapperCol,
-    labelInPlaceholder,
-    props.rules,
-    props.style,
-    props.required,
-    props.className
-  ])
 
   const Content = useMemo(() => {
     const config = {
@@ -171,6 +126,7 @@ export default (props => {
       case 'date':
         return (
           <Date
+            {...config}
             {...(props.configProps || {})}
             dateConfig={props.dateConfig}
             onChange={props.onChange}
@@ -215,9 +171,5 @@ export default (props => {
     }
   }, [props])
 
-  return (
-    <Col {...colProps}>
-      <Item {...formItemProps}>{Content}</Item>
-    </Col>
-  )
+  return Content
 }) as FC<FormItem & any>

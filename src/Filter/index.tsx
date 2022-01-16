@@ -156,6 +156,7 @@ const Filter: ForwardRefRenderFunction<FilterRef, FilterProps> = (props, ref) =>
       key: 'filterBtns',
       label: '',
       type: 'custom',
+      noRenderFormItem: true,
       col: getBtnContainerCol(items),
       customRender: () => btns
     }
@@ -196,7 +197,7 @@ interface FilterProps extends FormProps {
   maxLineCount?: number
   /** 最大展示列数, 超出列数则显示展开/收起按钮 */
   maxColumnCount?: number
-  onSearch?: (formValue?: NomalRecord) => Promise<void>
+  onSearch?: (formValue?: NomalRecord) => Promise<void> | void
   onAfterReset?: () => Promise<void>
   onValidateError?: (error: unknown) => Promise<void>
 }

@@ -1,51 +1,33 @@
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, useCallback } from 'react'
 import { Radio, Space } from 'antd'
 
 import type { RadioGroupProps, RadioChangeEvent } from 'antd'
-import type { Option, Direction } from '../../typings'
+import type { Direction, Option } from '../../typings'
 
 export default (props => {
   const {
-    size,
-    value,
     options,
     onChange,
-    defaultValue,
     optionType = 'default',
-    disabled: groupDisabled,
-    buttonStyle = 'outline',
     direction = 'horizontal',
     ...params
   } = props;
 
-  const handleChange = useCallback((isChecked: boolean, option: Option) => {
-    if (!isChecked) return
-    onChange && onChange(option.key, option)
+  const handleChange = useCallback((event: RadioChangeEvent) => {
+    const { checked, disabled, value } = event.target
+    onChange && onChange(value, { key: value, checked, disabled, value })
   }, [onChange])
 
-  const radios = useMemo(() => {
-    return options.map((option) => {
-      const { key, label, disabled } = option
-      const config = {
-        key,
-        size,
-        ...params,
-        ...(disabled && {disabled}),
-        ...(value && {value}),
-        ...(defaultValue && {defaultChecked: true}),
-        ...(groupDisabled && {disabled: groupDisabled}),
-        onChange:
-          (e: RadioChangeEvent) => handleChange(e.target.checked, option)
-      }
-      return optionType === 'button'
-        ? <Radio.Button type={buttonStyle} {...config}>{label}</Radio.Button>
-        : <Radio {...config}>{label}</Radio>
-    })
-  }, [props, handleChange])
-
   return (
-    <Radio.Group>
-      <Space wrap align="start" direction={direction}>{radios}</Space>
+    <Radio.Group {...params} onChange={handleChange}>
+      <Space wrap align="start" direction={direction}>
+        {options.map(item => {
+          const { key, label, disabled } = item
+          return optionType === 'button'
+            ? <Radio.Button value={key} disabled={disabled}>{label}</Radio.Button>
+            : <Radio value={key} disabled={disabled}>{label}</Radio>
+        })}
+      </Space>
     </Radio.Group>
   )
 }) as FC<IProps>
@@ -53,5 +35,5 @@ export default (props => {
 interface IProps extends Omit<RadioGroupProps, 'options' | 'onChange'> {
   options: Option[]
   direction?: Direction
-  onChange?(value: string | number, option?: Option): void
+  onChange?(value: string | number, option?: Omit<Option, 'label'>): void
 }

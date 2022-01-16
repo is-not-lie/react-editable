@@ -1,0 +1,25 @@
+@import '../styles/variable.scss';
+
+.form-size-small {
+  .ant-form-item {
+    margin: 0;
+    margin-bottom: $size-small;
+    font-size: $size-small;
+  }
+}
+
+.form-size-middle {
+  .ant-form-item {
+    margin: 0;
+    margin-bottom: $size-middle;
+    font-size: $size-middle;
+  }
+}
+
+.form-size-large {
+  .ant-form-item {
+    margin: 0;
+    margin-bottom: $size-large;
+    font-size: $size-large;
+  }
+}

@@ -97,6 +97,8 @@ interface BaseFormItem {
   /** 传给 Antd Form.Item 组件的 className 和 style */
   className?: string
   style?: CSSProperties
+  /** 不渲染 Form.Item */
+  noRenderFormItem?: true
   /** 展示必填 * 号 */
   required?: boolean
   /** 校验规则 */
