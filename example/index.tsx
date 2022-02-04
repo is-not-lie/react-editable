@@ -1,9 +1,31 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Form, FormItem, Filter } from '../src';
+import { Form, FormItem, Filter, BaseDictionary, EditTable, Columns } from '../src';
 import 'antd/dist/antd.css'
 import './style.scss'
+import { useState } from 'react';
+
+class Dictionary<T extends Record<string, string>> extends BaseDictionary<T> {
+  constructor(codeMap: T, initLoad: boolean = false) {
+    super({
+      loadDictFun: async (codes) => {
+        // console.log('codes is => ', codes);
+        return codes.reduce((pre, code) => ({...pre, [code]: [{key: '1', label: '1'}]}), {} as any)
+      },
+      codeMap,
+      initLoad
+    })
+  }
+}
+
+const dict = new Dictionary({
+  /**
+   * @description 测试
+   */
+  testKey: 'TESTCODEKEY',
+  TESTCODEKEY1: 'TESTCODEKEY1'
+})
 
 const App = () => {
   const items: FormItem[] = [
@@ -166,6 +188,75 @@ const App = () => {
     }) as Promise<void>
   }
 
+  const columns: Columns[] = [{
+    dataIndex: 'name',
+    title: '名称',
+    editable: true,
+    editType: 'input',
+    pinned: 'left',
+    isEdit: true,
+    configProps: { placeholder: '请输入名称' },
+    rule: [
+      { type: 'required', msg: '必填项' },
+    ]
+  }, {
+    dataIndex: 'age',
+    title: '年龄'
+  }, {
+    dataIndex: 'test',
+    title: '测试',
+    editable: true,
+    pinned: 'right',
+    editType: 'autoComplete',
+    options: [],
+    onSearch(keyword, rec) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve([{key: '123', label: '12333'}, {key: '222', label: <span>123123</span>}])
+        }, 1000)
+      })
+    }
+  },{
+    dataIndex: 'test1',
+    title: '测试1'
+  },{
+    dataIndex: 'test2',
+    title: '测试2'
+  },{
+    dataIndex: 'test3',
+    title: '测试3'
+  },{
+    dataIndex: 'test4',
+    title: '测试4'
+  },{
+    dataIndex: 'test5',
+    title: '测试5'
+  },{
+    dataIndex: 'test6',
+    title: '测试6'
+  },{
+    dataIndex: 'test7',
+    title: '测试7'
+  },{
+    dataIndex: 'test8',
+    title: '测试8'
+  },{
+    dataIndex: 'test9',
+    title: '测试9'
+  },{
+    dataIndex: 'test10',
+    title: '测试10'
+  },{
+    dataIndex: 'test11',
+    title: '测试11',
+  }]
+
+  React.useEffect(() => {
+    dict.loadDictionary().then(() => {
+      // console.log('get dict => ', dict.getDict('testKey'));
+    })
+  }, [])
+  
   return (
     <div className='wrapper'>
       <div className='slider'>slider</div>
@@ -175,9 +266,23 @@ const App = () => {
         </div>
         <div className='form-container'>
           <Form formItems={items} formKey="formKey" onFinish={(values) => {
-            console.log('form on finish values is => ', values)
+            // console.log('form on finish values is => ', values)
           }}/>
         </div>
+        <EditTable data={[
+          {name: '1', age: 1, test: '1', id: '1', children: [
+            {name: '1-1', age: 1.1, test: '1-1', id: '1-1'},
+            {name: '2-2', age: 2.2, test: '2-2', id: '2-2', children: [
+              {name: '2-2-1', age: 2.21, test: '2-2-1', id: '2-2-1'}
+            ]},
+            {name: '3-3', age: 3.3, test: '3-3', id: '3-3'},
+            {name: '4-4', age: 4.4, test: '4-4', id: '4-4'},
+          ]},
+          {name: '2', age: 2, test: '2', id: '2', children: [
+            {name: '2-1', age: 2.1, test: '2-1', id: '2-1'}
+          ]},
+          {name: '3', age: 3, test: '3', id: '3'},
+        ]} columns={columns} canSelect defaultExpanded paginationConfig={{total: 100}}/>
       </div>
     </div>
   );

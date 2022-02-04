@@ -1,4 +1,4 @@
-import type { CSSProperties, ComponentType, ReactNode, Key } from 'react'
+import type { CSSProperties, ComponentType, ReactNode } from 'react'
 import type { Rule } from 'rc-field-form/lib/interface'
 import type {
   InputNumberProps,
@@ -80,11 +80,11 @@ export interface TreeData extends Option {
   isLeaf?: boolean
 }
 
-type InputOnChange = (value: string | number) => void
-type selectOnChange = (
-  value: string | number | (string | number)[],
-  option?: SelectOption | SelectOption[]
-) => void
+// type InputOnChange = (value: string | number) => void
+// type selectOnChange = (
+//   value: string | number | (string | number)[],
+//   option?: SelectOption | SelectOption[]
+// ) => void
 
 interface BaseFormItem {
   key: string
@@ -113,44 +113,44 @@ interface BaseFormItem {
 
 interface InputFormItem extends BaseFormItem {
   type: 'input',
-  onChange?: InputOnChange
+  // onChange?: InputOnChange
   configProps?: Omit<InputProps, 'onChange' | 'onInput'>
 }
 
 interface InputNumberFormItem extends BaseFormItem {
   type: 'inputNumber'
-  onChange?: InputOnChange
+  // onChange?: InputOnChange
   configProps?: Omit<InputNumberProps, 'onChange' | 'onInput'>
 }
 
 interface PasswordFormItem extends BaseFormItem {
   type: 'password'
-  onChange?: InputOnChange
+  // onChange?: InputOnChange
   configProps?: Omit<PasswordProps, 'onChange' | 'onInput'>
 }
 
 interface SearchFormItem extends BaseFormItem {
   type: 'search'
-  onChange?: InputOnChange
+  // onChange?: InputOnChange
   configProps?: Omit<SearchProps, 'onChange' | 'onInput'>
 }
 
 interface TextAreaFormItem extends BaseFormItem {
   type: 'textarea'
-  onChange?: InputOnChange
+  // onChange?: InputOnChange
   configProps?: Omit<TextAreaProps, 'onChange' | 'onInput'>
 }
 
 interface DateFormItem extends BaseFormItem {
   type: 'date'
   dateConfig?: DateConfig
-  onChange?(value: number): void
+  // onChange?(value: number): void
   configProps?: Omit<DatePickerProps, 'onChange' | 'picker'>
 }
 // type PanelMode = 'time' | 'date' | 'week' | 'month' | 'quarter' | 'year' | 'decade'
 export interface RangeDateFormItem extends BaseFormItem {
   type: 'rangeDate',
-  onChange?(value: number[]): void
+  // onChange?(value: number[]): void
   configProps?: Omit<DatePickerProps, 'onChange' | 'picker' | 'mode' | 'value' | 'defaultValue' | 'defaultPickerValue' | 'onPanelChange' | 'placeholder' | 'onOk'> & Omit<RangePickerProps, 'onChange'>
 }
 
@@ -158,7 +158,7 @@ interface RadioFormItem extends BaseFormItem {
   type: 'radio'
   options: Option[]
   direction?: Direction
-  onChange?: selectOnChange
+  // onChange?: selectOnChange
   configProps?: Omit<RadioGroupProps, 'onChange' | 'options'>
 }
 
@@ -170,13 +170,13 @@ export interface CheckboxFormItem extends Omit<BaseFormItem, 'onChange'> {
   direction?: Direction
   /** 是否整组禁用 (将会覆盖 options 里的 disabled) */
   disabledGroup?: boolean
-  onChange?(value: CheckboxOptions['value'][], option?: CheckboxOptions[]): void
+  // onChange?(value: CheckboxOptions['value'][], option?: CheckboxOptions[]): void
   configProps?: Omit<CheckboxProps, CheckboxOmitProp>
 }
 
 interface AutoComplateFormItem extends BaseFormItem {
   type: 'autoComplate'
-  onChange?(value: string, option?: Omit<AutoComplateOption, 'label'>): void
+  // onChange?(value: string, option?: Omit<AutoComplateOption, 'label'>): void
   options: AutoComplateOption[]
   configProps?: Omit<AutoCompleteProps, 'onChange' | 'options'>
 }
@@ -184,7 +184,7 @@ interface AutoComplateFormItem extends BaseFormItem {
 interface CascaderFormItem extends BaseFormItem {
   type: 'cascader'
   options: CascaderOption[]
-  onChange?(value: Key | Key[], option?: NomalRecord[] | NomalRecord[][]): void
+  // onChange?(value: Key | Key[], option?: NomalRecord[] | NomalRecord[][]): void
   configProps?: Omit<CascaderProps<any>, 'onChange' | 'options'>
 }
 
@@ -193,27 +193,27 @@ interface MentionsFormItem extends BaseFormItem {
   /** 触发条件, 默认 @ 符 */
   prefix?: string | string[]
   options: Option<string>[]
-  onChange?: selectOnChange
+  // onChange?: selectOnChange
   configProps?: Omit<MentionProps, 'onChange' | 'prefix'>
 }
 
 interface SelectFormItem<V> extends BaseFormItem {
   type: 'select'
   options: SelectOption[]
-  onChange?: selectOnChange
+  // onChange?: selectOnChange
   configProps?: Omit<SelectProps<V>, 'onChange' | 'options'>
 }
 
 interface TreeSelectFormItem<V> extends BaseFormItem {
   type: 'treeSelect'
   data: TreeData[]
-  onChange?(value: string | number | (string | number)[], option?: TreeData): void
+  // onChange?(value: string | number | (string | number)[], option?: TreeData): void
   configProps?: Omit<TreeSelectProps<V>, 'onChange' | 'treeData' | 'fieldNames'>
 }
 
 interface SwitchFormItem extends BaseFormItem {
   type: 'switch'
-  onChange?(isChecked: boolean): void
+  // onChange?(isChecked: boolean): void
   configProps?: Omit<SwitchProps, 'onChange'>
 }
 
@@ -265,6 +265,8 @@ export interface FormProps {
   initialValue?: AntdFormProps['initialValues'];
   /** 表单默认布局 */
   defaultLayout?: DefaultLayout;
+  /** 是否开启 proxy 模式, 需搭配 useProxy 使用 */
+  proxy?: boolean;
   /** 表单项 change 事件 */
   onChange?(field: string, value: any, option?: any): void;
   /** 表单提交成功时回调 */

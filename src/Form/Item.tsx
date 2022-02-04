@@ -20,12 +20,14 @@ export default (props => {
     type,
     size,
     label,
+    onChange,
     labelInPlaceholder
   } = props;
 
   const Content = useMemo(() => {
     const config = {
       size,
+      onChange,
       ...(
         labelInPlaceholder &&
         typeof label === 'string' &&
@@ -39,7 +41,7 @@ export default (props => {
             type={type}
             {...config}
             configProps={props.configProps}
-            onChange={props.onChange}
+            // onChange={props.onChange}
           />
         )
       case 'password':
@@ -48,7 +50,7 @@ export default (props => {
             type={type}
             {...config}
             configProps={props.configProps}
-            onChange={props.onChange}
+            // onChange={props.onChange}
           />
         )
       case 'textarea':
@@ -57,7 +59,7 @@ export default (props => {
             type={type}
             {...config}
             configProps={props.configProps}
-            onChange={props.onChange}
+            // onChange={props.onChange}
           />
         )
       case 'search':
@@ -66,7 +68,7 @@ export default (props => {
             type={type}
             {...config}
             configProps={props.configProps}
-            onChange={props.onChange}
+            // onChange={props.onChange}
           />
         )
       case 'inputNumber':
@@ -74,14 +76,14 @@ export default (props => {
           <InputNumber
             {...config}
             {...(props.configProps || {})}
-            onChange={props.onChange}
+            // onChange={props.onChange}
           />
         )
       case 'select':
         return (
           <Select
             options={props.options}
-            onChange={props.onChange}
+            // onChange={props.onChange}
             {...config}
             {...(props.configProps || {})}
           />
@@ -90,7 +92,7 @@ export default (props => {
         return (
           <TreeSelect
             treeData={props.data}
-            onChange={props.onChange}
+            // onChange={props.onChange}
             {...config}
             {...(props.configProps || {})}
           />
@@ -101,14 +103,14 @@ export default (props => {
             ...config,
             ...props.configProps,
             options: props.options,
-            onChange: props.onChange
+            // onChange: props.onChange
           }}/>
         )
       case 'cascader':
         return (
           <Cascader
             options={props.options}
-            onChange={props.onChange}
+            // onChange={props.onChange}
             {...config}
             {...(props.configProps || {})}
           />
@@ -117,7 +119,7 @@ export default (props => {
         return (
           <Checkbox
             options={props.options}
-            onChange={props.onChange}
+            onChange={onChange}
             direction={props.direction}
             disabledGroup={props.disabledGroup}
             {...props.configProps}
@@ -129,18 +131,18 @@ export default (props => {
             {...config}
             {...(props.configProps || {})}
             dateConfig={props.dateConfig}
-            onChange={props.onChange}
+            // onChange={props.onChange}
           />
         )
       case 'rangeDate':
         return (
-          <RangeDate onChange={props.onChange} {...(props.configProps || {})} />
+          <RangeDate onChange={onChange} {...(props.configProps || {})} />
         )
       case 'mentions':
         return (
           <Mentions {...{
             options: props.options,
-            onChange: props.onChange,
+            // onChange: props.onChange,
             prefix: props.prefix,
             ...config,
             ...props.configProps
@@ -151,14 +153,14 @@ export default (props => {
           <Radio
             options={props.options}
             direction={props.direction}
-            onChange={props.onChange}
+            onChange={onChange}
             {...(props.configProps || {})}
           />
         )
       case 'switch':
         return (
           <Switch
-            onChange={props.onChange}
+            onChange={onChange}
             {...(props.configProps || {})}
           />
         )
@@ -172,4 +174,4 @@ export default (props => {
   }, [props])
 
   return Content
-}) as FC<FormItem & any>
+}) as FC<FormItem & { onChange?(value: any, option?: any): void } & any>

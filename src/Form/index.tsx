@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { Col, Form as AntdForm, Row } from 'antd'
-import { InstanceStacks } from '../hooks'
+import { InstanceStacks, formDataStacks, fieldOptionDataStacks } from '../hooks'
 import FormItem from './Item'
 
 import type { FormProps } from '../typings'
@@ -22,16 +22,29 @@ const Form: FC<FormProps> = (props) => {
     formItems,
     defaultLayout = defaultFormLayout,
     className: formClassName,
+    proxy,
     ...params
   } = props;
   const [formInstance] = useForm();
+
+  const handleChange = useCallback((key: string, value: any, option?: any) => {
+    if (proxy) {
+      const data = formDataStacks.get(formKey)
+      const optionMap = fieldOptionDataStacks.get(formKey)
+      if (optionMap)
+        optionMap[key] = option
+      else fieldOptionDataStacks.set(formKey, { [key]: option })
+      data && (data[key] = value)
+    }
+    onChange && onChange(key, value, option)
+  }, [onChange, formKey])
 
   const items = useMemo(() => {
     return formItems.map(item => {
       const { key } = item
       const config = {
         onChange: (value: any, option?: any) =>
-          onChange && onChange(key, value, option),
+          handleChange(key, value, option),
         size: defaultSize,
         ...defaultLayout,
         ...item

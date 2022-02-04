@@ -5,7 +5,6 @@ import type { CheckboxProps } from 'antd'
 import type {
   Direction,
   CheckboxOptions,
-  CheckboxFormItem,
   CheckboxOmitProp
 } from '../../typings'
 
@@ -61,5 +60,5 @@ interface IProps extends Omit<CheckboxProps, CheckboxOmitProp> {
   options: CheckboxOptions[]
   disabledGroup?: boolean
   direction?: Direction
-  onChange?: CheckboxFormItem['onChange']
+  onChange?(value: any, option?: any): void
 }
